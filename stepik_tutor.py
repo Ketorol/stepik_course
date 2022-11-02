@@ -131,5 +131,6 @@ for i in range(len(text)):
 print(counter)
 
 '''
-
-print(type(2))
+numbers = '7 77 18 2458 1 100'
+numbers_list = numbers.split()
+print(max(numbers_list))
