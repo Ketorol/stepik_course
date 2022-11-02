@@ -131,6 +131,14 @@ for i in range(len(text)):
 print(counter)
 
 '''
-numbers = '7 77 18 2458 1 100'
-numbers_list = numbers.split()
-print(max(numbers_list))
+
+def merge(list1, list2):
+    list3 = list1 + list2
+    
+
+# считываем данные
+numbers1 = [int(c) for c in input().split()]
+numbers2 = [int(c) for c in input().split()]
+
+# вызываем функцию
+print(merge(numbers1, numbers2))
