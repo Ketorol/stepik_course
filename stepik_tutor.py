@@ -131,14 +131,99 @@ for i in range(len(text)):
 print(counter)
 
 '''
+# Поиск СЛЕДУЮЩЕГО простого числа
+'''
+# объявление функции
+def get_next_prime(num):
+    n = num + 1
+    while True:  # Есть граница, выше которой не надо
+        # Запускаем перебор для проверки на делимость
+        for i in range(2, n):  # От единицы до нашего числа включительно!
+            if n % i == 0:  # Если нет остатка, то есть, число делится на что-то
+                n += 1  # Добавляем единицу
+                break  # Прерываем цикл
+        else:  # Доперли до конца цикла
+            return n  # Значит, наше число простое
 
-def merge(list1, list2):
-    list3 = list1 + list2
+# считываем данные
+n = int(input())
+
+# вызываем функцию
+print(get_next_prime(n))
+
+ИЛИ РЕКУРСИЕЙ:
+
+# объявление функции
+def get_next_prime(num):
+    num += 1
+    for i in range(2, num):
+        if num % i == 0:
+            return get_next_prime(num)
+    return num
     
 
 # считываем данные
-numbers1 = [int(c) for c in input().split()]
-numbers2 = [int(c) for c in input().split()]
+n = int(input())
 
 # вызываем функцию
-print(merge(numbers1, numbers2))
+print(get_next_prime(n))
+'''
+
+# Проверка пароля на надежность
+'''
+def is_password_good(password):
+    if len(password) < 8:
+        return False
+    flag1 = False
+    flag2 = False
+    flag3 = False
+    for j in password:
+        if j.isupper():
+            flag1 = True
+        if j.islower():
+            flag2 = True
+        if j.isdigit():
+            flag3 = True
+    return flag1 and flag2 and flag3
+    
+# считываем данные
+txt = input()
+
+# вызываем функцию
+print(is_password_good(txt))
+
+ИЛИ
+
+def is_password_good(password):
+    upp = [i for i in password if i.isupper()] # создаем список из TRUE, если большие  буквы удут в пароле
+    low = [i for i in password if i.islower()] # создаем список из TRUE, если маленькие буквы будут в пароле
+    dig = [i for i in password if i.isdigit()] # создаем список из TRUE, если циферки будут в пароле
+    return all([len(password) >= 8, upp, low, dig]) # получился список, состоящий из TRUE и/или FALSE 
+                                                      (len(password) >= 8 - эта штука тоже выводит TRUE/FALSE 
+                                                      в зависимости от результата сравнения), который в свою очередь 
+                                                      обрабатывается функцией ALL, которая выдает TRUE, если список 
+                                                      состоит из одних лишь TRUE и если хоть что-то будет в значении FALSE то
+                                                      функция ALL выдаст FALSE
+
+
+txt = input()                                  # вводим пароль
+print(is_password_good(txt))                   # проверяем его с помощью созданной функции
+
+'''
+
+# объявление функции
+def is_pangram(text):
+    alf = "abcdefghijklmnopqrstuvwxyz"
+    anal_text = text.replace(' ', '')
+    anal_text = anal_text.lower()
+    for k in alf:
+        if k not in anal_text:
+            return False
+    return True
+
+
+# считываем данные
+text = input()
+
+# вызываем функцию
+print(is_pangram(text))
