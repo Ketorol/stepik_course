@@ -259,4 +259,49 @@ while x == True:
             x = False
 """
 
-
+# Проект курса Пайтон для начинающих на Степик - Числовая угадайка
+'''
+from random import *
+rand_number = randint(1, 100)
+print('Добро пожаловать в числовую угадайку')
+new_limit = 100
+def is_valid(user_number, new_limit):
+    if user_number.isdigit() and 1 <= int(user_number) <= new_limit:
+        return True
+    else:
+        return False
+counter = 0
+flag = 0
+while flag == 0:
+    user_number = input('Введите число(в виде цифр):')
+    x = is_valid(user_number, new_limit)
+    if x == False:
+        print(f'А может быть все-таки введем целое число от 1 до {new_limit}?')
+        flag = 0
+    else:
+        work_number = int(user_number)
+        if work_number < rand_number:
+            print('Ваше число меньше загаданного, попробуйте еще разок')
+            counter += 1
+        elif work_number > rand_number:
+            print('Ваше число больше загаданного, попробуйте еще разок')
+            counter += 1
+        elif work_number == rand_number:
+            print('Вы угадали, поздравляем!')
+            counter += 1
+            print(f'Чудо произошло с {counter}-ой попытки')
+            q = input('Желаете сыграть ещё раз?')
+            if q == 'да':
+                t = input('Желаете ли задать новое максимальное число для угадайки?')
+                if t == 'да':
+                    new_limit = int(input('Введите новую желаемую границу'))
+                    rand_number = randint(1, new_limit)
+                    counter = 0
+                else:
+                    rand_number = randint(1, 100)
+                    counter = 0
+                flag = 0
+            else:
+                break
+print('Спасибо, что играли в числовую угадайку. Еще увидимся...')
+'''
