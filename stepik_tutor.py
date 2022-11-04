@@ -211,19 +211,52 @@ print(is_password_good(txt))                   # проверяем его с п
 
 '''
 
+# Задачка на проверку Палиндрома
+'''
 # объявление функции
 def is_pangram(text):
-    alf = "abcdefghijklmnopqrstuvwxyz"
-    anal_text = text.replace(' ', '')
-    anal_text = anal_text.lower()
-    for k in alf:
-        if k not in anal_text:
+    glif = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    text = text.replace(' ', '')
+    text = text.lower()
+    for k in glif:
+        if k not in text:
             return False
+            
     return True
-
 
 # считываем данные
 text = input()
 
 # вызываем функцию
 print(is_pangram(text))
+'''
+
+# Казино, которое всегда в выигрыше
+
+"""
+from random import randint
+print('Угадай число, загаданное машиной, от 0 до 100!')
+cpu_number = randint(1, 100)
+x = True
+while x == True:
+
+    user_number = int(input('Какое число загадал компьютер? '))
+
+    if user_number > cpu_number:
+        print('Слишком много, попробуйте еще раз')
+        x = True
+    elif user_number < cpu_number:
+        print('Слишком мало, попробуйте еще раз')
+        x = True
+    elif user_number == cpu_number:
+        print('Вы угадали, поздравляем!')
+        y = input('Попытаетесь угадать еще раз?').lower()
+        if y == 'да':
+            cpu_number = randint(1, 100)
+            x = True
+        else:
+            print('До следующей встречи, пока ;-\)')
+            x = False
+"""
+
+
