@@ -112,3 +112,186 @@ pass_gened = generate_password(pass_counts, pass_len)
 print(*pass_gened, sep='\n')
 '''
 
+# Шифратор Цезаря (каждое слово шифруется на сдвиг, равный длине этого слова)
+'''
+orig_text = input()
+orig_text_copy = orig_text
+for q in orig_text_copy:
+    if q in '*,.!@"-':
+        orig_text_copy = orig_text_copy.replace(q, '')
+orig_text_copy_list = [len(i) for i in orig_text_copy.split()]
+count = 0
+word = ''
+
+for f in orig_text:
+    number = ord(f)
+    if f == ' ':
+        count += 1
+        word += f
+    elif 65 <= number <= 90:
+        if number + orig_text_copy_list[count] > 90:
+            word += chr(number + orig_text_copy_list[count] - 26)
+        else:
+            word += chr(number + orig_text_copy_list[count])
+    elif 97 <= number <= 122:
+        if number + orig_text_copy_list[count] > 122:
+            word += chr(number + orig_text_copy_list[count] - 26)
+        else:
+            word += chr(number + orig_text_copy_list[count])
+    else:
+        word += f
+print(word)
+'''
+# Переводчик из 10-ой системы в любую другую указанную юзером
+'''
+num = int(input())
+base = int(input())
+
+def trans_10_to_base(num, base=2):
+    res = ''
+    while num:
+        num, d = divmod(num, base)
+        sd = str(d) if d < 10 else chr(ord('A') + d - 10)
+        res = sd + res
+    return res
+print(trans_10_to_base(num, base))
+'''
+
+# Игра - виселица
+from random import *
+word_list = ['файтинг', 'фаталити', 'бросок', 'подножка', 'шорьюкен', 'скорпион', 'рю', 'саб-зиро', 'кен', 'казуя', 'кинг', 'мортуха', 'эсэф', 'теккен']
+
+def get_word():
+    word = choice(word_list).upper()
+    return word
+
+def display_hangman(tries):
+    stages = [  # финальное состояние: голова, торс, обе руки, обе ноги
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |     \\|/
+                       |      |
+                       |     / \\
+                       -
+                    ''',
+        # голова, торс, обе руки, одна нога
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |     \\|/
+                       |      |
+                       |     / 
+                       -
+                    ''',
+        # голова, торс, обе руки
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |     \\|/
+                       |      |
+                       |      
+                       -
+                    ''',
+        # голова, торс и одна рука
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |     \\|
+                       |      |
+                       |     
+                       -
+                    ''',
+        # голова и торс
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |      |
+                       |      |
+                       |     
+                       -
+                    ''',
+        # голова
+        '''
+                       --------
+                       |      |
+                       |      O
+                       |    
+                       |      
+                       |     
+                       -
+                    ''',
+        # начальное состояние
+        '''
+                       --------
+                       |      |
+                       |      
+                       |    
+                       |      
+                       |     
+                       -
+                    '''
+    ]
+    return stages[tries]
+
+def play(word):
+    word_completion = "_" * len(word)
+    guessed = False
+    guessed_letters = []
+    guessed_words = []
+    tries = 6
+
+    print('Давайте играть в угадайку слов!')
+    print(display_hangman(tries))
+    print(word_completion)
+    print()
+
+    while not guessed and tries > 0:
+        guess = input('Введите букву или слово целиком: ').upper()
+        if len(guess) == 1 and guess.isalpha():
+            if guess in guessed_letters:
+                print('Вы уже называли букву', guess)
+            elif guess not in word:
+                print('Буквы', guess, 'нет в слове.')
+                tries -= 1
+                guessed_letters.append(guess)
+            else:
+                print('Отличная работа, буква', guess, 'присутствует в слове!')
+                guessed_letters.append(guess)
+                word_as_list = list(word_completion)
+                indices = [i for i in range(len(word)) if word[i] == guess]
+                for index in indices:
+                    word_as_list[index] = guess
+                word_completion = ''.join(word_as_list)
+                if '_' not in word_completion:
+                    guessed = True
+        elif len(guess) == len(word) and guess.isalpha():
+            if guess in guessed_words:
+                print('Вы уже называли слово', guess)
+            elif guess != word:
+                print('Слово', guess, 'не является верным.')
+                tries -= 1
+                guessed_words.append(guess)
+            else:
+                guessed = True
+                word_completion = word
+        else:
+            print('Введите букву или слово.')
+        print(display_hangman(tries))
+        print(word_completion)
+        print()
+    if guessed:
+        print('Поздравляем, вы угадали слово! Вы победили!')
+    else:
+        print('Вы не угадали слово. Загаданным словом было ' + word + '. Может быть в следующий раз!')
+again = 'д'
+
+while again.lower() == 'д':
+    word = get_word()
+    play(word)
+    again = input('Играем еще раз? (д = да, н = нет):')
