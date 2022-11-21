@@ -43,3 +43,35 @@ def alphabet_position(text):
                 continue
     return ' '.join(new_text_l)
 '''
+# Выводим макс и мин число строки
+'''
+def high_and_low(numbers):
+    number_list = numbers.split()
+    digit_list = [int(k) for k in number_list]
+    result = str(int(max(digit_list))) + ' ' + str(int(min(digit_list)))
+    print(result)
+'''
+# Проверяем на наличие пары скобок в строке
+"""
+def valid_parentheses(string):
+    i = 0
+    for c in string:
+        if (i < 0):
+            return False
+        if (c == '('):
+            i += 1
+        elif (c == ')'):
+            i -= 1
+    return i == 0
+"""
+# проверяем наличие одного элемента списка в другом списке и при его наличии
+# во втором списке, создаем из этих элементов отсортированный список
+def in_array(array1, array2):
+    # your code
+    res = []
+    for a1 in array1:
+        for a2 in array2:
+            if a1 in a2 and a1 not in res:
+                res.append(a1)
+    res.sort()
+    return res
